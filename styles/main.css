@@ -1,0 +1,145 @@
+html {
+    font-size: 62.5%;
+}
+body {
+    font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    letter-spacing: 0.01rem;
+    color: #212121;
+    background-color: #f5f5f5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+md-input-container:not(.md-input-invalid) > md-icon.email > svg,
+md-input-container:not(.md-input-invalid) > md-icon.password > svg {
+    fill: #bdbdbd;
+}
+md-input-container.md-input-invalid > md-icon.email > svg,
+md-input-container.md-input-invalid > md-icon.password > svg {
+    fill: red;
+}
+.toolbardemoBasicUsage md-toolbar md-icon.md-default-theme {
+    color: white;
+}
+
+md-list-item.active md-icon > svg {
+    fill: rgb(161, 11, 16);
+}
+md-list-item.active p {
+    color: rgb(161, 11, 16);
+}
+
+.md-raised.md-primary.sign-in-btn {
+    background-color: rgb(161, 11, 16);
+}
+
+.message-error {
+    color: rgb(161, 11, 16);
+    font-size: small;
+}
+
+md-icon.profit-up > svg {
+    fill: green
+}
+md-icon.profit-down > svg {
+    fill: red
+}
+
+md-card-content.profit-up {
+    background-color: green;
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    letter-spacing: 10px;
+    color: white;
+}
+md-card-content.profit-down {
+    background-color: red;
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    letter-spacing: 10px;
+    color: white;
+}
+md-card-content.profit-zero {
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    letter-spacing: 10px;
+}
+
+
+
+.gridList md-grid-list {
+    margin: 10px;
+}
+.gridList md-grid-tile {
+    border: 1px solid rgb(161, 11, 16);;
+    border-radius: 10px;
+    transition: all 400ms ease-out 50ms;
+}
+.gridList md-grid-tile-footer {
+    background: none;
+    height: 60px;
+}
+
+@media screen and (max-width: 568px) {
+    md-card {
+        overflow-x: scroll;
+    }
+}
+
+
+md-card-content > h3 {
+    text-align: center;
+    margin: 0;
+}
+
+md-content.finance-page > md-card,
+md-content.dashboard-page > md-card,
+md-content.settings-page > md-card {
+    min-width: 350px;
+}
+
+h1.market-name {
+    margin-top: 0;
+    font-size: 2.0rem !important;
+    line-height: 2.0rem;
+    letter-spacing: 0;
+    font-weight: 300;
+    text-transform: inherit;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+h2.market-address {
+    font-size: 1.3rem !important;
+    line-height: 2.0rem;
+    letter-spacing: 0.01rem;
+    font-weight: 400;
+    text-align: center;
+}
+
+market-details {
+    width: 100%;
+}
+
+button.md-primary > md-icon > svg {
+    fill: red
+}
+
+span.current-month {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 14px;
+    font-style: inherit;
+    font-variant: inherit;
+    font-family: inherit;
+    line-height: 36px;
+}

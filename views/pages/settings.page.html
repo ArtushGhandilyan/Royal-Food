@@ -1,0 +1,85 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+    <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Royal Food</h1>
+    </md-toolbar>
+    <md-content layout-padding>
+        <md-list>
+            <md-list-item ng-class="menuClass('dashboard')" ng-click="navigateTo('dashboard')">
+                <md-icon md-svg-icon="images/icons/dashboard.svg"></md-icon>
+                <p>Ընդհանուր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('markets')" ng-click="navigateTo('markets')">
+                <md-icon md-svg-icon="images/icons/markets.svg"></md-icon>
+                <p>Վաճառքի կետեր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('products')" ng-click="navigateTo('products')">
+                <md-icon md-svg-icon="images/icons/products.svg"></md-icon>
+                <p>Ապրանքատեսականի</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('finance')" ng-click="navigateTo('finance')">
+                <md-icon md-svg-icon="images/icons/finance.svg"></md-icon>
+                <p>Ֆինանսական</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('cash-flow')" ng-click="navigateTo('cash-flow')">
+                <md-icon md-svg-icon="images/icons/cash-flow.svg"></md-icon>
+                <p>Դրամական հոսքեր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('settings')" ng-click="navigateTo('settings')">
+                <md-icon md-svg-icon="images/icons/settings.svg"></md-icon>
+                <p>Կարգավորումներ</p>
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-list-item ng-click="logout()">
+                <md-icon md-svg-icon="images/icons/sign_out.svg"></md-icon>
+                <p>Դուրս գալ</p>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-sidenav>
+
+<md-content layout="column" flex>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" ng-click="toggleLeft()" aria-label="Menu">
+                <md-icon md-svg-icon="images/icons/menu.svg"></md-icon>
+            </md-button>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-content class="settings-page" layout="row" layout-sm="column" flex>
+        <md-card layout="" flex="">
+            <md-card-content>
+                <h3>Վաճառքի կետեր</h3>
+                <md-list class="fixedRows md-default-theme" role="list">
+                    <md-list-item class="md-2-line"  ng-repeat="(key, market) in markets">
+                        <div class="md-list-item-text" layout="column">
+                            <h3><b>{{market.name}}</b></h3>
+                            <h4><i>{{market.address}}</i></h4>
+                        </div>
+                        <md-icon md-svg-icon="images/icons/edit.svg"></md-icon>
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
+            <div class="md-actions" layout="row" layout-padding="" layout-align="end center">
+                <md-button class="md-primary" ng-click="addMarket()">Ավելացնել</md-button>
+            </div>
+        </md-card>
+        <md-card  layout="" flex="">
+            <md-card-content>
+                <h3>Ապրանքատեսականի</h3>
+                <md-list class="fixedRows md-default-theme" role="list">
+                    <md-list-item class="md-2-line"  ng-repeat="(key, product) in products">
+                        <div class="md-list-item-text" layout="column">
+                            <h3><b>{{product.name}}</b></h3>
+                            <h4><i>{{product.description}}</i></h4>
+                        </div>
+                        <md-icon md-svg-icon="images/icons/edit.svg"></md-icon>
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
+            <div class="md-actions" layout="row" layout-padding="" layout-align="end center">
+                <md-button class="md-primary" ng-click="addProduct()">Ավելացնել</md-button>
+            </div>
+        </md-card>
+    </md-content>
+</md-content>

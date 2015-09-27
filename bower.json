@@ -1,0 +1,25 @@
+{
+  "name": "RoyalFood",
+  "version": "0.0.0",
+  "authors": [
+    "Artush Ghandilyan <artush.ghandilyan@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.5",
+    "angular-material": "~0.11.0",
+    "angularfire": "~1.1.2",
+    "firebase": "~2.2.9",
+    "angular-route": "~1.4.5",
+    "angular-messages": "~1.4.5",
+    "angular-touch": "~1.4.5"
+  }
+}

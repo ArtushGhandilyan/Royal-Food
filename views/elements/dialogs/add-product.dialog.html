@@ -1,0 +1,40 @@
+<md-dialog aria-label="New Product">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Նոր Ապրանքատեսականի</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="images/icons/close.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="max-width:800px; max-height: 810px;">
+            <div>
+                <div layout layout-sm="column">
+                    <md-input-container flex>
+                        <label>Անվանում</label>
+                        <input ng-model="product.name">
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Միավոր</label>
+                        <input ng-model="product.unit">
+                    </md-input-container>
+                </div>
+                <md-input-container flex>
+                    <label>Նկարագրություն</label>
+                    <input ng-model="product.description">
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <div class="md-actions" layout="row">
+            <md-button ng-click="cancel()">
+                Ընդհատել
+            </md-button>
+            <span flex></span>
+            <md-button type="submit" ng-click="submit()" style="margin-right:20px;" md-autofocus>
+                Ավելացնել
+            </md-button>
+        </div>
+    </form>
+</md-dialog>

@@ -1,0 +1,370 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+    <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Royal Food</h1>
+    </md-toolbar>
+    <md-content layout-padding>
+        <md-list>
+            <md-list-item ng-class="menuClass('dashboard')" ng-click="navigateTo('dashboard')">
+                <md-icon md-svg-icon="images/icons/dashboard.svg"></md-icon>
+                <p>Ընդհանուր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('markets')" ng-click="navigateTo('markets')">
+                <md-icon md-svg-icon="images/icons/markets.svg"></md-icon>
+                <p>Վաճառքի կետեր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('products')" ng-click="navigateTo('products')">
+                <md-icon md-svg-icon="images/icons/products.svg"></md-icon>
+                <p>Ապրանքատեսականի</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('finance')" ng-click="navigateTo('finance')">
+                <md-icon md-svg-icon="images/icons/finance.svg"></md-icon>
+                <p>Ֆինանսական</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('cash-flow')" ng-click="navigateTo('cash-flow')">
+                <md-icon md-svg-icon="images/icons/cash-flow.svg"></md-icon>
+                <p>Դրամական հոսքեր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('settings')" ng-click="navigateTo('settings')">
+                <md-icon md-svg-icon="images/icons/settings.svg"></md-icon>
+                <p>Կարգավորումներ</p>
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-list-item ng-click="logout()">
+                <md-icon md-svg-icon="images/icons/sign_out.svg"></md-icon>
+                <p>Դուրս գալ</p>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-sidenav>
+<md-content>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" ng-click="toggleLeft()" aria-label="Menu">
+                <md-icon md-svg-icon="images/icons/menu.svg"></md-icon>
+            </md-button>
+            <span flex></span>
+            <span>
+                <h1>Ֆինանսական</h1>
+            </span>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-content class="finance-page" layout="column">
+        <md-tabs style="min-height: 600px;"
+                 md-dynamic-height md-border-bottom>
+            <md-tab label="Հաշվետվություն">
+                <md-content class="md-padding">
+                    <md-card>
+                        <md-card-content style="text-align: center;">
+                            <table class="table finance-table table-bordered">
+                                <thead>
+                                    <tr class="start">
+                                        <th></th>
+                                        <th>Սեպտեմբեր</th>
+                                        <th>Հոկտեմբեր</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bold start">
+                                        <td>Սկզբնական մնացորդ</td>
+                                        <td>{{startBalance | number : 0}} դր․</td>
+                                        <td>{{endBalance | number : 0}} դր․</td>
+                                    </tr>
+
+                                    <tr class="bold start green">
+                                        <td>Մուտքեր</td>
+                                        <td>{{amountSell + commonInvest | number : 0}} դր․</td>
+                                        <td>0 դր․</td>
+                                    </tr>
+                                    <tr class="sub-item">
+                                        <td>Հասույթ</td>
+                                        <td>{{amountSell | number : 0}} դր․</td>
+                                        <td>0 դր․</td>
+                                    </tr>
+                                    <tr class="sub-item" ng-repeat="(typeId, amount) in investLogsMap">
+                                        <td>{{investTypes[typeId].name}}</td>
+                                        <td>{{amount | number : 0}} դր․</td>
+                                        <td>0 դր․</td>
+                                    </tr>
+
+                                    <tr class="bold start red">
+                                        <td>Ելքեր</td>
+                                        <td>{{expenseCommonAmount + marketsSalaryAmount + salaryCommonAmount + amountBuy | number : 0}} դր․</td>
+                                        <td>0 դր․</td>
+                                    </tr>
+                                    <tr class="sub-item">
+                                        <td>Ապրանքների ձեռքբերում</td>
+                                        <td>{{amountBuy | number : 0}} դր․</td>
+                                        <td>0 դր․</td>
+                                    </tr>
+                                    <tr class="sub-item">
+                                        <td>Աշխատավարձ</td>
+                                        <td>{{marketsSalaryAmount + salaryCommonAmount | number : 0}} դր․</td>
+                                        <td>0 դր․</td>
+                                    </tr>
+                                    <tr class="sub-item" ng-repeat="(typeId, amount) in expenseLogsMap">
+                                        <td>{{expenseTypes[typeId].name}}</td>
+                                        <td>{{amount | number : 0}} դր․</td>
+                                        <td>0 դր․</td>
+                                    </tr>
+
+                                    <tr class="bold start">
+                                        <td>Վերջնական մնացորդ</td>
+                                        <td>{{endBalance | number : 0}} դր․</td>
+                                        <td>{{endBalance | number : 0}} դր․</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </md-card-content>
+                    </md-card>
+                </md-content>
+            </md-tab>
+            <md-tab label="Շահույթ / Վնաս">
+                <md-content class="md-padding">
+                    <md-card>
+                        <md-card-content style="text-align: center;">
+                            <table class="table finance-table table-bordered">
+                                <tbody>
+                                <tr class="bold start">
+                                    <td>Ապրանքների իրացումից հասույթ</td>
+                                    <td>{{yearAmountSell | number : 0}} դր․</td></tr>
+                                <tr class="start">
+                                    <td>Շրջանառության հարկ</td>
+                                    <td>{{yearTaxExpense | number : 0}} դր․</td></tr>
+                                <tr class="bold start">
+                                    <td>Ապրանքների իրացումից զուտ հասույթ</td>
+                                    <td>{{yearAmountSell - yearTaxExpense | number : 0}} դր․</td></tr>
+                                <tr class="start">
+                                    <td>Ուղղակի ծախսումներ աշխատավարձի գծով</td>
+                                    <td>{{yearSalaryCommonAmount + yearMarketsSalaryAmount | number : 0}} դր․</td></tr>
+                                <tr class="start">
+                                    <td>Ուղղակի նյութական ծախսումներ</td>
+                                    <td>{{yearAmountBuy | number : 0}} դր․</td></tr>
+                                <tr class="start">
+                                    <td>Ուղղակի արտադրական այլ ծախսումներ</td>
+                                    <td>0 դր․</td></tr>
+                                <tr class="start">
+                                    <td>Անուղղակի ծախսումներ</td>
+                                    <td>{{yearEquipmentServiceExpense + yearCommunalExpense + yearTransportExpense | number : 0}} դր․</td></tr>
+                                <tr class="bold start">
+                                    <td>Իրացումից ստացված համախառն շահույթ</td>
+                                    <td>{{yearAmountSell - yearTaxExpense -
+                                        (yearSalaryCommonAmount + yearMarketsSalaryAmount) - yearAmountBuy -
+                                        (yearEquipmentServiceExpense + yearCommunalExpense + yearTransportExpense) | number : 0}} դր․</td></tr>
+                                <tr class="start">
+                                    <td>Իրացման ծախսեր</td>
+                                    <td>{{yearRealizationExpense | number : 0}} դր․</td></tr>
+                                <tr class="start">
+                                    <td>Վարչական ծախսեր</td>
+                                    <td>{{yearAdministrationExpense | number : 0}} դր․</td></tr>
+                                <tr class="start">
+                                    <td>Նախագործառնական ծախսեր</td>
+                                    <td>{{yearPreOperationExpense | number : 0}} դր․</td></tr>
+                                <tr class="bold start">
+                                    <td>Հիմանական գործունեությունից շահույթ/վնաս</td>
+                                    <td>{{yearAmountSell - yearTaxExpense -
+                                        (yearSalaryCommonAmount + yearMarketsSalaryAmount) - yearAmountBuy -
+                                        (yearEquipmentServiceExpense + yearCommunalExpense + yearTransportExpense) -
+                                        (yearRealizationExpense + yearAdministrationExpense + yearPreOperationExpense) | number : 0}} դր․</td></tr>
+                                <tr class="start">
+                                    <td>Վարկի դիմաց վճարված տոկոսավճարներ</td>
+                                    <td>{{yearPercentExpense | number : 0}} դր․</td></tr>
+                                <tr class="start">
+                                    <td>Այլ վարկեր</td>
+                                    <td>{{yearOtherCreditExpense | number : 0}} դր․</td></tr>
+                                <tr class="bold start">
+                                    <td>Շահույթ/վնաս մինչ շահույթահարկի վճարումը</td>
+                                    <td>{{yearAmountSell - yearTaxExpense -
+                                        (yearSalaryCommonAmount + yearMarketsSalaryAmount) - yearAmountBuy -
+                                        (yearEquipmentServiceExpense + yearCommunalExpense + yearTransportExpense) -
+                                        (yearRealizationExpense + yearAdministrationExpense + yearPreOperationExpense) -
+                                        (yearPercentExpense + yearOtherCreditExpense) | number : 0}} դր․</td></tr>
+                                <tr class="start">
+                                    <td>Շահույթահարկ 20%</td>
+                                    <td>0 դր․</td></tr>
+                                <tr class="bold start">
+                                    <td>Զուտ շահույթ/վնաս</td>
+                                    <td>{{yearAmountSell - yearTaxExpense -
+                                        (yearSalaryCommonAmount + yearMarketsSalaryAmount) - yearAmountBuy -
+                                        (yearEquipmentServiceExpense + yearCommunalExpense + yearTransportExpense) -
+                                        (yearRealizationExpense + yearAdministrationExpense + yearPreOperationExpense) -
+                                        (yearPercentExpense + yearOtherCreditExpense) | number : 0}} դր․</td></tr>
+                                </tbody>
+                            </table>
+                        </md-card-content>
+                    </md-card>
+                </md-content>
+            </md-tab>
+            <md-tab label="Ելքեր">
+                <md-content class="md-padding">
+                    <md-card>
+                        <form name="expenseForm" ng-submit="addExpense()">
+                            <md-card-content>
+                                <h3>Նոր Ծախսեր</h3>
+                                <div layout="column">
+                                    <div layout layout-sm="column">
+                                        <md-input-container flex>
+                                            <label>Անվանում</label>
+                                            <md-select ng-model="expense.typeId" required>
+                                                <md-option ng-repeat="(key, expenseType) in expenseTypes" value="{{key}}">{{expenseType.name}}</md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-input-container flex>
+                                            <label>Գումար</label>
+                                            <input type="number" ng-model="expense.amount" required/>
+                                        </md-input-container>
+                                    </div>
+                                    <md-input-container flex>
+                                        <label>Մեկնաբանություն</label>
+                                        <input type="text" ng-model="expense.comment"/>
+                                    </md-input-container>
+                                </div>
+                            </md-card-content>
+                            <div class="md-actions" layout="row" layout-padding="" layout-align="center center">
+                                <md-button class="md-primary md-raised" ng-disabled="expenseForm.$invalid" type="submit">Ավելացնել</md-button>
+                            </div>
+                        </form>
+                    </md-card>
+                    <md-card>
+                        <form name="salaryForm" ng-submit="addSalary()">
+                            <md-card-content>
+                                <h3>Աշխատավարձ</h3>
+                                <div layout="column">
+                                    <div layout layout-sm="column">
+                                        <md-input-container flex>
+                                            <label>Աշխատող</label>
+                                            <md-select ng-model="salary.workerId" required>
+                                                <md-option ng-repeat="(key, worker) in workers" value="{{key}}">{{worker.name}}</md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-input-container flex>
+                                            <label>Գումար</label>
+                                            <input type="number" ng-model="salary.amount" required/>
+                                        </md-input-container>
+                                    </div>
+                                    <md-input-container flex>
+                                        <label>Մեկնաբանություն</label>
+                                        <input type="text" ng-model="salary.comment"/>
+                                    </md-input-container>
+                                </div>
+                            </md-card-content>
+                            <div class="md-actions" layout="row" layout-padding="" layout-align="center center">
+                                <md-button class="md-primary md-raised" ng-disabled="salaryForm.$invalid" type="submit">Ավելացնել</md-button>
+                            </div>
+                        </form>
+                    </md-card>
+                    <md-card>
+                        <md-card-content style="text-align: center;">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Ամսաթիվ</th>
+                                    <th>Անվանում</th>
+                                    <th>Գումար</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="log in expenseLogs">
+                                    <td>{{log.date | date : 'dd/MM/yyyy'}}</td>
+                                    <td ng-if="log.comment">{{log.comment}}</td><td ng-if="!log.comment">{{expenseTypes[log.typeId].name}}</td>
+                                    <td>{{log.amount}} դր․</td>
+                                    <td>
+                                        <md-button class="md-icon-button" aria-label="Delete">
+                                            <md-icon md-svg-icon="images/icons/delete.svg" ng-click="removeExpense(log)"></md-icon>
+                                        </md-button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-card-content>
+                    </md-card>
+                    <md-card>
+                        <md-card-content style="text-align: center;">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Ամսաթիվ</th>
+                                    <th>Աշխատող</th>
+                                    <th>Գումար</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="log in salaryLogs">
+                                    <td>{{log.date | date : 'dd/MM/yyyy'}}</td>
+                                    <td>{{workers[log.workerId].name}}</td>
+                                    <td>{{log.amount}} դր․</td>
+                                    <td>
+                                        <md-button class="md-icon-button" aria-label="Delete">
+                                            <md-icon md-svg-icon="images/icons/delete.svg" ng-click="removeSalary(log)"></md-icon>
+                                        </md-button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-card-content>
+                    </md-card>
+                </md-content>
+            </md-tab>
+            <md-tab label="Մուտքեր">
+                <md-content class="md-padding">
+                    <md-card>
+                        <form name="investForm" ng-submit="addInvest()">
+                            <md-card-content>
+                                <h3>Նոր Մուտք</h3>
+                                <div layout="column">
+                                    <div layout layout-sm="column">
+                                        <md-input-container flex>
+                                            <label>Անվանում</label>
+                                            <md-select ng-model="invest.typeId" required>
+                                                <md-option ng-repeat="(key, investType) in investTypes" value="{{key}}">{{investType.name}}</md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-input-container flex>
+                                            <label>Գումար</label>
+                                            <input type="number" ng-model="invest.amount" required/>
+                                        </md-input-container>
+                                    </div>
+                                    <md-input-container flex>
+                                        <label>Մեկնաբանություն</label>
+                                        <input type="text" ng-model="invest.comment"/>
+                                    </md-input-container>
+                                </div>
+                            </md-card-content>
+                            <div class="md-actions" layout="row" layout-padding="" layout-align="center center">
+                                <md-button class="md-primary md-raised" ng-disabled="investForm.$invalid" type="submit">Ավելացնել</md-button>
+                            </div>
+                        </form>
+                    </md-card>
+                    <md-card>
+                        <md-card-content style="text-align: center;">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Ամսաթիվ</th>
+                                    <th>Անվանում</th>
+                                    <th>Գումար</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="log in investLogs">
+                                    <td>{{log.date | date : 'dd/MM/yyyy'}}</td>
+                                    <td ng-if="log.comment">{{log.comment}}</td><td ng-if="!log.comment">{{investTypes[log.typeId].name}}</td>
+                                    <td>{{log.amount}} դր․</td>
+                                    <td>
+                                        <md-button class="md-icon-button" aria-label="Delete">
+                                            <md-icon md-svg-icon="images/icons/delete.svg" ng-click="removeInvest(log)"></md-icon>
+                                        </md-button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-card-content>
+                    </md-card>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</md-content>

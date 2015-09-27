@@ -1,0 +1,23 @@
+<md-content layout layout-align="center center" flex>
+    <md-card>
+        <img src="images/login_form.png" class="md-card-image" alt="Washed Out">
+        <md-card-content>
+            <form ng-submit="login()" name="loginForm">
+                <div layout="column">
+                    <md-input-container flex>
+                        <md-icon md-svg-src="images/icons/email.svg" class="email"></md-icon>
+                        <input ng-model="credentials.email" name="email" type="email" placeholder="Email" required>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <md-icon md-svg-src="images/icons/password.svg" class="email"></md-icon>
+                        <input ng-model="credentials.password" name="password" type="password" placeholder="Password" required>
+                    </md-input-container>
+                    <div class="message-error" ng-if="loginErrorMessage" ng-bind="loginErrorMessage"></div>
+                    <div layout="row" layout-align="center start">
+                        <md-button type="submit" class="sign-in-btn md-raised md-primary">Sign In</md-button>
+                    </div>
+                </div>
+            </form>
+        </md-card-content>
+    </md-card>
+</md-content>

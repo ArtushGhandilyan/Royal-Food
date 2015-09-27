@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html ng-app="RoyalFood" ng-controller="appController">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <title>Royal Food</title>
+        
+        <!-- Application styles -->
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/animation.css">
+        <link rel="stylesheet" href="styles/table.css">
+
+        <!-- AngularJS -->
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+        <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+        <script src="bower_components/angular-route/angular-route.min.js"></script>
+        <script src="bower_components/angular-touch/angular-touch.min.js"></script>
+
+        <!-- Firebase -->
+        <script src="bower_components/firebase/firebase.js"></script>
+        
+        <!-- AngularFire -->
+        <script src="bower_components/angularfire/dist/angularfire.min.js"></script>
+
+        <!-- Angular Material -->
+        <script src="bower_components/angular-material/angular-material.min.js"></script>
+        <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+    
+        <!-- Application module, controllers, directives -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/constants.js"></script>
+
+        <script src="scripts/controllers/app.controller.js"></script>
+        <script src="scripts/controllers/dashboard.controller.js"></script>
+        <script src="scripts/controllers/login.controller.js"></script>
+        <script src="scripts/controllers/markets.controller.js"></script>
+        <script src="scripts/controllers/products.controller.js"></script>
+        <script src="scripts/controllers/finance.controller.js"></script>
+        <script src="scripts/controllers/cashflow.controller.js"></script>
+        <script src="scripts/controllers/settings.controller.js"></script>
+        <script src="scripts/controllers/dialogs/add-market.controller.js"></script>
+        <script src="scripts/controllers/dialogs/add-product.controller.js"></script>
+
+        <script src="scripts/directives/market-details.directive.js"></script>
+        <script src="scripts/directives/product-details.directive.js"></script>
+
+        <script src="scripts/services/authentication.service.js"></script>
+        <script src="scripts/services/dictionary.service.js"></script>
+        <script src="scripts/services/market.service.js"></script>
+        <script src="scripts/services/product.service.js"></script>
+        <script src="scripts/services/log.service.js"></script>
+        <script src="scripts/services/salary.service.js"></script>
+        <script src="scripts/services/finance.service.js"></script>
+        <script src="scripts/services/remain.service.js"></script>
+        <script src="scripts/services/utils.service.js"></script>
+        <script src="scripts/services/expense.service.js"></script>
+        <script src="scripts/services/invest.service.js"></script>
+        <script src="scripts/services/cash.service.js"></script>
+    </head>
+    <body>
+        <md-content ng-view></md-content>
+    </body>
+</html>

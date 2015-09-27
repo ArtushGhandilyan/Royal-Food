@@ -1,0 +1,117 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+    <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Royal Food</h1>
+    </md-toolbar>
+    <md-content layout-padding>
+        <md-list>
+            <md-list-item ng-class="menuClass('dashboard')" ng-click="navigateTo('dashboard')">
+                <md-icon md-svg-icon="images/icons/dashboard.svg"></md-icon>
+                <p>Ընդհանուր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('markets')" ng-click="navigateTo('markets')">
+                <md-icon md-svg-icon="images/icons/markets.svg"></md-icon>
+                <p>Վաճառքի կետեր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('products')" ng-click="navigateTo('products')">
+                <md-icon md-svg-icon="images/icons/products.svg"></md-icon>
+                <p>Ապրանքատեսականի</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('finance')" ng-click="navigateTo('finance')">
+                <md-icon md-svg-icon="images/icons/finance.svg"></md-icon>
+                <p>Ֆինանսական</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('cash-flow')" ng-click="navigateTo('cash-flow')">
+                <md-icon md-svg-icon="images/icons/cash-flow.svg"></md-icon>
+                <p>Դրամական հոսքեր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('settings')" ng-click="navigateTo('settings')">
+                <md-icon md-svg-icon="images/icons/settings.svg"></md-icon>
+                <p>Կարգավորումներ</p>
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-list-item ng-click="logout()">
+                <md-icon md-svg-icon="images/icons/sign_out.svg"></md-icon>
+                <p>Դուրս գալ</p>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-sidenav>
+<md-content>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" ng-click="toggleLeft()" aria-label="Menu">
+                <md-icon md-svg-icon="images/icons/menu.svg"></md-icon>
+            </md-button>
+            <span flex></span>
+            <span>
+                <h1>Դրամական հոսքեր</h1>
+            </span>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-content>
+        <md-tabs md-selected="selectedIndex"
+                 style="min-height: 600px;"
+                 ng-swipe-left="nextTab()" ng-swipe-right="prevTab()"
+                 md-dynamic-height md-border-bottom>
+            <md-tab label="Ընդհանուր">
+                <md-content class="md-padding">
+                    <md-card>
+                        <md-card-content style="text-align: center;">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr><td>Առք</td><td>{{amountBuy | number : 0}} դր․</td></tr>
+                                <tr><td>Վճարած</td><td>{{cashCommonAmount | number : 0}} դր․</td></tr>
+                                <tr><td>Պարտք</td><td>{{amountBuy - cashCommonAmount | number : 0}} դր․</td></tr>
+                                </tbody>
+                            </table>
+                        </md-card-content>
+                    </md-card>
+                    <md-card>
+                        <form name="cashForm" ng-submit="addCash()">
+                            <md-card-content>
+                                <div layout="column">
+                                    <md-input-container flex>
+                                        <label>Գումար</label>
+                                        <input type="number" step="any" ng-model="cash.amount" required/>
+                                    </md-input-container>
+                                </div>
+                            </md-card-content>
+                            <div class="md-actions" layout="row" layout-padding="" layout-align="center center">
+                                <md-button class="md-primary md-raised" ng-disabled="cashForm.$invalid" type="submit">Ավելացնել</md-button>
+                            </div>
+                        </form>
+                    </md-card>
+                </md-content>
+            </md-tab>
+            <md-tab label="Հոսքեր">
+                <md-content class="md-padding">
+                    <md-card>
+                        <md-card-content style="text-align: center;">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Ամսաթիվ</th>
+                                    <th>Գումար</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="log in cashLogs">
+                                    <td>{{log.date | date : 'dd/MM/yyyy'}}</td>
+                                    <td>{{log.amount}} դր․</td>
+                                    <td>
+                                        <md-button class="md-icon-button" aria-label="Delete">
+                                            <md-icon md-svg-icon="images/icons/delete.svg" ng-click="removeCash(log)"></md-icon>
+                                        </md-button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-card-content>
+                    </md-card>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</md-content>

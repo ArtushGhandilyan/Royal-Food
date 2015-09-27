@@ -1,0 +1,268 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+    <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Royal Food</h1>
+    </md-toolbar>
+    <md-content layout-padding>
+        <md-list>
+            <md-list-item ng-class="menuClass('dashboard')" ng-click="navigateTo('dashboard')">
+                <md-icon md-svg-icon="images/icons/dashboard.svg"></md-icon>
+                <p>Ընդհանուր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('markets')" ng-click="navigateTo('markets')">
+                <md-icon md-svg-icon="images/icons/markets.svg"></md-icon>
+                <p>Վաճառքի կետեր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('products')" ng-click="navigateTo('products')">
+                <md-icon md-svg-icon="images/icons/products.svg"></md-icon>
+                <p>Ապրանքատեսականի</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('finance')" ng-click="navigateTo('finance')">
+                <md-icon md-svg-icon="images/icons/finance.svg"></md-icon>
+                <p>Ֆինանսական</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('cash-flow')" ng-click="navigateTo('cash-flow')">
+                <md-icon md-svg-icon="images/icons/cash-flow.svg"></md-icon>
+                <p>Դրամական հոսքեր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('settings')" ng-click="navigateTo('settings')">
+                <md-icon md-svg-icon="images/icons/settings.svg"></md-icon>
+                <p>Կարգավորումներ</p>
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-list-item ng-click="logout()">
+                <md-icon md-svg-icon="images/icons/sign_out.svg"></md-icon>
+                <p>Դուրս գալ</p>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-sidenav>
+<md-content>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" ng-click="toggleLeft()" aria-label="Menu">
+                <md-icon md-svg-icon="images/icons/menu.svg"></md-icon>
+            </md-button>
+            <span flex></span>
+            <span>
+                <h1>Ընդհանուր</h1>
+            </span>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-content>
+        <md-tabs md-selected="selectedIndex"
+                 style="min-height: 600px;"
+                 ng-swipe-left="nextTab()" ng-swipe-right="prevTab()"
+                 md-dynamic-height md-border-bottom>
+            <md-tab label="Ընդհանուր">
+                <md-content class="md-padding">
+                    <md-card>
+                        <md-card-content ng-class="{
+                            'profit-up':balance > 0,
+                            'profit-zero':balance == 0,
+                            'profit-down':balance < 0}">
+                            {{balance | number : 0}} դրամ
+                            <md-icon ng-if="balance > 0"
+                                     md-svg-icon="images/icons/profit_up_white.svg"></md-icon>
+                            <md-icon ng-if="balance < 0"
+                                     md-svg-icon="images/icons/profit_down_white.svg"></md-icon>
+                        </md-card-content>
+                    </md-card>
+                    <md-card>
+                        <md-card-content style="text-align: center;">
+                            <md-datepicker ng-model="interval.start" md-placeholder="Սկիզբ" hide-sm></md-datepicker>
+                            <md-datepicker ng-model="interval.end" md-placeholder="Վերջ" hide-sm></md-datepicker>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Ապրանք</th>
+                                    <th colspan="2">Առք</th>
+                                    <th colspan="2">Վաճառք</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="(productId, product) in products">
+                                    <td><a href="#/products?productId={{productId}}">{{products[productId].name}}</a></td>
+                                    <td ng-repeat-start="(actionId, action) in actions">
+                                        {{info[productId][actionId].quantity | number : 1}} {{products[productId].unit}}
+                                    </td>
+                                    <td ng-repeat-end>
+                                        {{info[productId][actionId].amount | number : 0}} դր․
+                                    </td>
+                                </tr>
+                                <tr class="bold">
+                                    <td>Ընդհանուր</td>
+                                    <td colspan="2" ng-repeat="(actionId, action) in actions">
+                                        {{info.common[actionId].amount | number : 0}} դր․
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-card-content>
+                    </md-card>
+                    <md-card>
+                        <md-card-content style="text-align: center;">
+                            <table class="table common-table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Վաճառքի Կետ</th>
+                                    <th>Առք</th>
+                                    <th>Վաճառք</th>
+                                    <th>Balance</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="(marketId, market) in markets"
+                                    ng-class="{
+                                        'profit-up':marketsInfo[marketId].balance > 0,
+                                        'profit-down':marketsInfo[marketId].balance < 0}">
+
+                                    <td><a href="#/markets?marketId={{marketId}}">{{markets[marketId].name}}</a></td>
+                                    <td ng-repeat="(actionId, action) in actions">
+                                        {{marketsInfo[marketId][actionId].amount | number : 0}} դր․
+                                    </td>
+                                    <td>
+                                        {{marketsInfo[marketId].balance | number : 0}} դր․
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-card-content>
+                    </md-card>
+                </md-content>
+            </md-tab>
+            <md-tab label="Նոր Գրառում">
+                <md-content class="md-padding">
+                    <md-card>
+                        <form name="logForm" ng-submit="addLog()">
+                            <md-card-content>
+                                <h3>Նոր Գրառում</h3>
+                                <div layout="column">
+                                    <div layout layout-sm="column">
+                                        <md-input-container>
+                                            <label>Գործարք</label>
+                                            <md-select ng-model="log.actionId" required>
+                                                <md-option ng-repeat="(key, action) in actions" value="{{key}}">{{action.name}}</md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-input-container flex>
+                                            <label>Վաճառքի կետ</label>
+                                            <md-select ng-model="log.marketId" required>
+                                                <md-option ng-repeat="(key, market) in markets" value="{{key}}">{{market.name}}, {{market.address}}</md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-input-container flex>
+                                            <label>Ապրանքատեսականի</label>
+                                            <md-select ng-model="log.productId" required>
+                                                <md-option ng-repeat="(key, product) in products" value="{{key}}">{{product.name}}</md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout layout-sm="column">
+                                        <md-input-container flex>
+                                            <label>Քանակ</label>
+                                            <input type="number" step="any" ng-model="log.quantity" required/>
+                                        </md-input-container>
+                                        <md-input-container flex>
+                                            <label>Գին</label>
+                                            <input type="number" step="any" ng-model="log.price" required/>
+                                        </md-input-container>
+                                    </div>
+                                    <md-input-container flex>
+                                        <label>Մեկնաբանություն</label>
+                                        <input type="text" ng-model="log.comment"/>
+                                    </md-input-container>
+                                </div>
+                            </md-card-content>
+                            <div class="md-actions" layout="row" layout-padding="" layout-align="center center">
+                                <md-button class="md-primary md-raised" ng-show="isload" ng-disabled="logForm.$invalid" type="submit">Ավելացնել</md-button>
+                            </div>
+                        </form>
+                    </md-card>
+                </md-content>
+            </md-tab>
+            <md-tab label="Մնացորդ">
+                <md-content class="md-padding">
+                    <md-card>
+                        <md-card-content style="text-align: center;">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Ապրանք</th>
+                                    <th>Մնացորդ</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="(productId, product) in products">
+                                    <td>{{products[productId].name}}</td>
+                                    <td>{{remain[productId] | number : 1}} {{products[productId].unit}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-card-content>
+                    </md-card>
+                </md-content>
+            </md-tab>
+            <md-tab label="Աշխատավարձ">
+                <md-content class="md-padding">
+                    <md-card>
+                        <md-card-content style="text-align: center;">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Ամսաթիվ</th>
+                                    <th>Աշխատող</th>
+                                    <th>Գումար</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="log in salaryLogs">
+                                    <td>{{log.date | date : 'dd/MM/yyyy'}}</td>
+                                    <td>{{log.worker}}</td>
+                                    <td>{{log.salary}} դր․</td>
+                                    <td>
+                                        <md-button class="md-icon-button" aria-label="Delete">
+                                            <md-icon md-svg-icon="images/icons/delete.svg" ng-click="removeSalary(log)"></md-icon>
+                                        </md-button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-card-content>
+                    </md-card>
+                    <md-card>
+                        <form name="salaryForm" ng-submit="addSalary()">
+                            <md-card-content>
+                                <h3>Աշխատավարձ</h3>
+                                <div layout="column">
+                                    <md-input-container flex>
+                                        <label>Վաճառքի կետ</label>
+                                        <md-select ng-model="salary.marketId" required>
+                                            <md-option ng-repeat="(key, market) in markets" value="{{key}}">{{market.name}}, {{market.address}}</md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <md-input-container flex>
+                                        <label>Աշխատող</label>
+                                        <input type="text" ng-model="salary.worker" required/>
+                                    </md-input-container>
+                                    <md-input-container flex>
+                                        <label>Գումար</label>
+                                        <input type="number" step="any" ng-model="salary.amount" required/>
+                                    </md-input-container>
+                                    <md-input-container flex>
+                                        <label>Մեկնաբանություն</label>
+                                        <input type="text" ng-model="salary.comment"/>
+                                    </md-input-container>
+                                </div>
+                            </md-card-content>
+                            <div class="md-actions" layout="row" layout-padding="" layout-align="center center">
+                                <md-button class="md-primary md-raised" ng-disabled="salaryForm.$invalid" type="submit">Ավելացնել</md-button>
+                            </div>
+                        </form>
+                    </md-card>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</md-content>

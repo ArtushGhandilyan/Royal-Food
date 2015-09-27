@@ -1,0 +1,44 @@
+<md-dialog aria-label="New Market">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Նոր Վաճառքի Կետ</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="images/icons/close.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="max-width:800px; max-height: 810px;">
+            <div>
+                <md-input-container flex>
+                    <label>Անվանում</label>
+                    <input ng-model="market.name">
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Հասցե</label>
+                    <input ng-model="market.address">
+                </md-input-container>
+                <div layout layout-sm="column">
+                    <md-input-container flex>
+                        <label>Մենեջեր</label>
+                        <input ng-model="market.manager">
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Հեռ․</label>
+                        <input ng-model="market.tel">
+                    </md-input-container>
+                </div>
+            </div>
+        </md-dialog-content>
+        <div class="md-actions" layout="row">
+            <md-button ng-click="cancel()">
+                Ընդհատել
+            </md-button>
+            <span flex></span>
+            <md-button type="submit" ng-click="submit()" style="margin-right:20px;" md-autofocus>
+                Ավելացնել
+            </md-button>
+        </div>
+    </form>
+</md-dialog>

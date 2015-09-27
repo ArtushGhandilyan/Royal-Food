@@ -1,0 +1,74 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+    <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Royal Food</h1>
+    </md-toolbar>
+    <md-content layout-padding>
+        <md-list>
+            <md-list-item ng-class="menuClass('dashboard')" ng-click="navigateTo('dashboard')">
+                <md-icon md-svg-icon="images/icons/dashboard.svg"></md-icon>
+                <p>Ընդհանուր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('markets')" ng-click="navigateTo('markets')">
+                <md-icon md-svg-icon="images/icons/markets.svg"></md-icon>
+                <p>Վաճառքի կետեր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('products')" ng-click="navigateTo('products')">
+                <md-icon md-svg-icon="images/icons/products.svg"></md-icon>
+                <p>Ապրանքատեսականի</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('finance')" ng-click="navigateTo('finance')">
+                <md-icon md-svg-icon="images/icons/finance.svg"></md-icon>
+                <p>Ֆինանսական</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('cash-flow')" ng-click="navigateTo('cash-flow')">
+                <md-icon md-svg-icon="images/icons/cash-flow.svg"></md-icon>
+                <p>Դրամական հոսքեր</p>
+            </md-list-item>
+            <md-list-item ng-class="menuClass('settings')" ng-click="navigateTo('settings')">
+                <md-icon md-svg-icon="images/icons/settings.svg"></md-icon>
+                <p>Կարգավորումներ</p>
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-list-item ng-click="logout()">
+                <md-icon md-svg-icon="images/icons/sign_out.svg"></md-icon>
+                <p>Դուրս գալ</p>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-sidenav>
+<md-content>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" ng-click="toggleLeft()" aria-label="Menu">
+                <md-icon md-svg-icon="images/icons/menu.svg"></md-icon>
+            </md-button>
+            <span flex></span>
+            <span>
+                <h1 class="market-name">{{product.name}}</h1>
+                <h2 class="market-address">{{product.description}}</h2>
+            </span>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="toggleRight()" aria-label="Menu">
+                <md-icon md-svg-icon="images/icons/products_white.svg"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content>
+        <product-details></product-details>
+    </md-content>
+</md-content>
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+    <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Ապրանքատեսականի</h1>
+    </md-toolbar>
+    <md-content layout-padding>
+        <md-list>
+            <md-list-item class="md-2-line" ng-repeat="(key, product) in products" ng-click="details(key)">
+                <div class="md-list-item-text" layout="column">
+                    <h3><b>{{product.name}}</b></h3>
+                    <h4><i>{{product.description}}</i></h4>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-sidenav>

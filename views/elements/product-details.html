@@ -1,0 +1,115 @@
+<md-tabs md-selected="selectedIndex"
+         style="min-height: 600px;"
+         ng-swipe-left="nextTab()" ng-swipe-right="prevTab()"
+         md-dynamic-height md-border-bottom>
+    <md-tab label="Հիմնական">
+        <md-content class="md-padding">
+            <md-card>
+                <md-card-content ng-class="{
+                            'profit-up':balance > 0,
+                            'profit-zero':balance == 0,
+                            'profit-down':balance < 0}">
+                    {{balance | number : 0}} դրամ
+                    <md-icon ng-if="balance > 0"
+                             md-svg-icon="images/icons/profit_up_white.svg"></md-icon>
+                    <md-icon ng-if="balance < 0"
+                             md-svg-icon="images/icons/profit_down_white.svg"></md-icon>
+                </md-card-content>
+            </md-card>
+            <md-card>
+                <md-card-content style="text-align: center;">
+                    <md-datepicker ng-model="interval.start" md-placeholder="Սկիզբ" hide-sm></md-datepicker>
+                    <md-datepicker ng-model="interval.end" md-placeholder="Վերջ" hide-sm></md-datepicker>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Վաճառքի Կետ</th>
+                            <th colspan="2">Առք</th>
+                            <th colspan="2">Վաճառք</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="(marketId, market) in markets">
+                            <td><a href="#/markets?marketId={{marketId}}">{{markets[marketId].name}}</a></td>
+                            <td ng-repeat-start="(actionId, action) in actions">
+                                {{info[marketId][actionId].quantity | number : 1}} {{product.unit}}
+                            </td>
+                            <td ng-repeat-end>
+                                {{info[marketId][actionId].amount | number : 0}} դր․
+                            </td>
+                        </tr>
+                        <tr class="bold">
+                            <td>Ընդհանուր</td>
+                            <td ng-repeat-start="(actionId, action) in actions">
+                                {{info.common[actionId].quantity | number : 1}} {{product.unit}}
+                            </td>
+                            <td ng-repeat-end>
+                                {{info.common[actionId].amount | number : 0}} դր․
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-card-content>
+            </md-card>
+        </md-content>
+    </md-tab>
+    <md-tab label="Մնացորդ">
+        <md-content class="md-padding">
+            <md-card>
+                <md-card-content style="text-align: center;">
+                    <table class="table remain-table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Վաճառքի Կետ</th>
+                            <th>Մնացորդ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="(marketId, market) in markets">
+                            <td class="market">
+                                <a href="#/markets?marketId={{marketId}}"><b>{{markets[marketId].name}}</b> <span class="market-address">{{markets[marketId].address}}</span></a>
+                            </td>
+                            <td>{{remain[marketId] | number : 1}} {{product.unit}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-card-content>
+            </md-card>
+        </md-content>
+    </md-tab>
+    <md-tab label="Վերջին գրառումները">
+        <md-content class="md-padding">
+            <md-card>
+                <md-card-content>
+                    <table id="table" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Ամսաթիվ</th>
+                            <th>Գործարք</th>
+                            <th>Վաճառքի Կետ</th>
+                            <th>Քանակ</th>
+                            <th>Գին</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="log in logs">
+                            <td data-title="Date">{{log.date | date : 'dd/MM/yyyy'}}</td>
+                            <td data-title="Action">{{actions[log.actionId].name}}</td>
+                            <td data-title="Market"><a href="#/markets?marketId={{log.marketId}}">{{markets[log.marketId].name}}</a></td>
+                            <td data-title="Quantity">{{log.quantity}} {{products[log.productId].unit}}</td>
+                            <td data-title="Price">{{log.price}} դր․</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-card-content>
+            </md-card>
+        </md-content>
+    </md-tab>
+</md-tabs>
+
+
+
+
+
+
+
