@@ -63,6 +63,34 @@ RoyalFood.factory("logService", function($q, financeService, remainService, stCo
             });
             return deferred.promise;
         },
+        getAmountBuySell: function(start, end) {
+            var deferred = $q.defer();
+            var sell = {};
+            var buy = {};
+            ref.orderByChild("date").startAt(start.getTime()).endAt(end.getTime()).once("value", function(logs) {
+                logs.forEach(function(log) {
+                    var value = log.val();
+                    var month = new Date(value.date).getMonth();
+                    var amount = (value.price * value.quantity);
+
+                    if(value.actionId == stConstant.SELL_ACTION_ID) {
+                        sell[month] = sell[month] || 0;
+                        sell.common = sell.common || 0;
+
+                        sell[month] += amount;
+                        sell.common += amount;
+                    } else if(value.actionId == stConstant.BUY_ACTION_ID) {
+                        buy[month] = buy[month] || 0;
+                        buy.common = buy.common || 0;
+
+                        buy[month] += amount;
+                        buy.common += amount;
+                    }
+                });
+                deferred.resolve({sell: sell, buy: buy});
+            });
+            return deferred.promise;
+        },
         getAmountSell: function(start, end) {
             var deferred = $q.defer();
             var result = 0;

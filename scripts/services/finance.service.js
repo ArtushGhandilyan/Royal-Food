@@ -12,20 +12,24 @@ RoyalFood.factory("financeService", function($q) {
 	return {
         getFinance: function(year, month) {
             var deferred = $q.defer();
-            var result = 0;
+            var result = {};
+            var yearInit = 0;
             ref.orderByKey().once("value", function(finance) {
                 var commonFinance = finance.val();
-                for(var j = 2015; j <= year; j++) {
-                    var yearlyFinance = commonFinance[j];
+                for(var j = 2015; j < year; j++) {
+                    var prevYearFinance = commonFinance[j];
                     var toMonth = (j == year) ? month : 12;
                     for(var i = 0; i < toMonth; i++) {
-                        result += (yearlyFinance[i] || 0);
+                        yearInit += (prevYearFinance[i] || 0);
                     }
                 }
-                deferred.resolve({
-                    start: result,
-                    end: result + commonFinance[year][month]
-                });
+
+                var currentYearFinance = commonFinance[year];
+                for(var index = 0; index <= month; index++) {
+                    result[index] = yearInit + (currentYearFinance[index] || 0);
+                }
+
+                deferred.resolve(result);
             });
             return deferred.promise;
         },

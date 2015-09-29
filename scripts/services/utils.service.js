@@ -105,9 +105,55 @@ RoyalFood.factory("utilsService", function(stConstant) {
             });
             return result;
         },
+        groupByMonth: function(array) {
+            var result = {};
+            angular.forEach(array, function(item) {
+                angular.forEach(item, function(amount, month) {
+                    if(!result[month]) {
+                        result[month] = 0;
+                    }
+                    result[month] += amount;
+                });
+            });
+            return result;
+        },
+        groupSalaryByMonth: function(array) {
+            var result = {
+                common: 0
+            };
+            angular.forEach(array, function(item) {
+                var month = new Date(item.date).getMonth();
+                if(!result[month]) {
+                    result[month] = 0;
+                }
+                result[month] += item.amount;
+                result.common += item.amount;
+            });
+            return result;
+        },
+        groupByWithMonth: function(array, groupProp, sumProp) {
+            var result = {};
+            array.forEach(function(item) {
+                var month = new Date(item.date).getMonth();
+
+                if(!result[item[groupProp]]) {
+                    result[item[groupProp]] = {
+                        common: 0
+                    };
+                }
+                if(!result[item[groupProp]][month]) {
+                    result[item[groupProp]][month] = 0;
+                }
+
+
+                result[item[groupProp]][month] += item[sumProp];
+                result[item[groupProp]].common += item[sumProp];
+            });
+            return result;
+        },
         sumBy: function(array, sumProp) {
             var result = 0;
-            array.forEach(function(item) {
+            angular.forEach(array, function(item) {
                 result += item[sumProp];
             });
             return result;

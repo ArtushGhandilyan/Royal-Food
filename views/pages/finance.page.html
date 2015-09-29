@@ -60,58 +60,49 @@
                                 <thead>
                                     <tr class="start">
                                         <th></th>
-                                        <th>Սեպտեմբեր</th>
-                                        <th>Հոկտեմբեր</th>
+                                        <th ng-repeat="month in months">{{stMonthNames[month]}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="bold start">
                                         <td>Սկզբնական մնացորդ</td>
-                                        <td>{{startBalance | number : 0}} դր․</td>
-                                        <td>{{endBalance | number : 0}} դր․</td>
+                                        <td ng-repeat="month in months">{{balance[month - 1] | number : 0}} դր․</td>
                                     </tr>
 
                                     <tr class="bold start green">
                                         <td>Մուտքեր</td>
-                                        <td>{{amountSell + commonInvest | number : 0}} դր․</td>
-                                        <td>0 դր․</td>
+                                        <td ng-repeat="month in months">{{((amountSell[month] + investCommonAmount[month]) || 0) | number : 0}} դր․</td>
                                     </tr>
                                     <tr class="sub-item">
                                         <td>Հասույթ</td>
-                                        <td>{{amountSell | number : 0}} դր․</td>
-                                        <td>0 դր․</td>
+                                        <td ng-repeat="month in months">{{(amountSell[month] || 0) | number : 0}} դր․</td>
                                     </tr>
-                                    <tr class="sub-item" ng-repeat="(typeId, amount) in investLogsMap">
-                                        <td>{{investTypes[typeId].name}}</td>
-                                        <td>{{amount | number : 0}} դր․</td>
-                                        <td>0 դր․</td>
+                                    <tr class="sub-item" ng-repeat="(typeId, type) in investTypes">
+                                        <td>{{type.name}}</td>
+                                        <td ng-repeat="month in months">{{(yearInvestLogsMap[typeId][month] || 0) | number : 0}} դր․</td>
                                     </tr>
 
                                     <tr class="bold start red">
                                         <td>Ելքեր</td>
-                                        <td>{{expenseCommonAmount + marketsSalaryAmount + salaryCommonAmount + amountBuy | number : 0}} դր․</td>
-                                        <td>0 դր․</td>
+                                        <td ng-repeat="month in months">{{
+                                            ((expenseCommonAmount[month] + marketsSalaryAmount[month] + salaryCommonAmount[month] + amountBuy[month]) || 0) | number : 0}} դր․</td>
                                     </tr>
                                     <tr class="sub-item">
                                         <td>Ապրանքների ձեռքբերում</td>
-                                        <td>{{amountBuy | number : 0}} դր․</td>
-                                        <td>0 դր․</td>
+                                        <td ng-repeat="month in months">{{(amountBuy[month] || 0) | number : 0}} դր․</td>
                                     </tr>
                                     <tr class="sub-item">
                                         <td>Աշխատավարձ</td>
-                                        <td>{{marketsSalaryAmount + salaryCommonAmount | number : 0}} դր․</td>
-                                        <td>0 դր․</td>
+                                        <td ng-repeat="month in months">{{((marketsSalaryAmount[month] + salaryCommonAmount[month]) || 0) | number : 0}} դր․</td>
                                     </tr>
-                                    <tr class="sub-item" ng-repeat="(typeId, amount) in expenseLogsMap">
-                                        <td>{{expenseTypes[typeId].name}}</td>
-                                        <td>{{amount | number : 0}} դր․</td>
-                                        <td>0 դր․</td>
+                                    <tr class="sub-item" ng-repeat="(typeId, type) in expenseTypes">
+                                        <td>{{type.name}}</td>
+                                        <td ng-repeat="month in months">{{(yearExpenseLogsMap[typeId][month] || 0) | number : 0}} դր․</td>
                                     </tr>
 
                                     <tr class="bold start">
                                         <td>Վերջնական մնացորդ</td>
-                                        <td>{{endBalance | number : 0}} դր․</td>
-                                        <td>{{endBalance | number : 0}} դր․</td>
+                                        <td ng-repeat="month in months">{{balance[month] | number : 0}} դր․</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -127,19 +118,19 @@
                                 <tbody>
                                 <tr class="bold start">
                                     <td>Ապրանքների իրացումից հասույթ</td>
-                                    <td>{{yearAmountSell | number : 0}} դր․</td></tr>
+                                    <td>{{amountSell.common | number : 0}} դր․</td></tr>
                                 <tr class="start">
                                     <td>Շրջանառության հարկ</td>
                                     <td>{{yearTaxExpense | number : 0}} դր․</td></tr>
                                 <tr class="bold start">
                                     <td>Ապրանքների իրացումից զուտ հասույթ</td>
-                                    <td>{{yearAmountSell - yearTaxExpense | number : 0}} դր․</td></tr>
+                                    <td>{{amountSell.common - yearTaxExpense | number : 0}} դր․</td></tr>
                                 <tr class="start">
                                     <td>Ուղղակի ծախսումներ աշխատավարձի գծով</td>
                                     <td>{{yearSalaryCommonAmount + yearMarketsSalaryAmount | number : 0}} դր․</td></tr>
                                 <tr class="start">
                                     <td>Ուղղակի նյութական ծախսումներ</td>
-                                    <td>{{yearAmountBuy | number : 0}} դր․</td></tr>
+                                    <td>{{amountBuy.common | number : 0}} դր․</td></tr>
                                 <tr class="start">
                                     <td>Ուղղակի արտադրական այլ ծախսումներ</td>
                                     <td>0 դր․</td></tr>
@@ -148,8 +139,8 @@
                                     <td>{{yearEquipmentServiceExpense + yearCommunalExpense + yearTransportExpense | number : 0}} դր․</td></tr>
                                 <tr class="bold start">
                                     <td>Իրացումից ստացված համախառն շահույթ</td>
-                                    <td>{{yearAmountSell - yearTaxExpense -
-                                        (yearSalaryCommonAmount + yearMarketsSalaryAmount) - yearAmountBuy -
+                                    <td>{{amountSell.common - yearTaxExpense -
+                                        (yearSalaryCommonAmount + yearMarketsSalaryAmount) - amountBuy.common -
                                         (yearEquipmentServiceExpense + yearCommunalExpense + yearTransportExpense) | number : 0}} դր․</td></tr>
                                 <tr class="start">
                                     <td>Իրացման ծախսեր</td>
@@ -162,8 +153,8 @@
                                     <td>{{yearPreOperationExpense | number : 0}} դր․</td></tr>
                                 <tr class="bold start">
                                     <td>Հիմանական գործունեությունից շահույթ/վնաս</td>
-                                    <td>{{yearAmountSell - yearTaxExpense -
-                                        (yearSalaryCommonAmount + yearMarketsSalaryAmount) - yearAmountBuy -
+                                    <td>{{amountSell.common - yearTaxExpense -
+                                        (yearSalaryCommonAmount + yearMarketsSalaryAmount) - amountBuy.common -
                                         (yearEquipmentServiceExpense + yearCommunalExpense + yearTransportExpense) -
                                         (yearRealizationExpense + yearAdministrationExpense + yearPreOperationExpense) | number : 0}} դր․</td></tr>
                                 <tr class="start">
@@ -174,8 +165,8 @@
                                     <td>{{yearOtherCreditExpense | number : 0}} դր․</td></tr>
                                 <tr class="bold start">
                                     <td>Շահույթ/վնաս մինչ շահույթահարկի վճարումը</td>
-                                    <td>{{yearAmountSell - yearTaxExpense -
-                                        (yearSalaryCommonAmount + yearMarketsSalaryAmount) - yearAmountBuy -
+                                    <td>{{amountSell.common - yearTaxExpense -
+                                        (yearSalaryCommonAmount + yearMarketsSalaryAmount) - amountBuy.common -
                                         (yearEquipmentServiceExpense + yearCommunalExpense + yearTransportExpense) -
                                         (yearRealizationExpense + yearAdministrationExpense + yearPreOperationExpense) -
                                         (yearPercentExpense + yearOtherCreditExpense) | number : 0}} դր․</td></tr>
@@ -184,8 +175,8 @@
                                     <td>0 դր․</td></tr>
                                 <tr class="bold start">
                                     <td>Զուտ շահույթ/վնաս</td>
-                                    <td>{{yearAmountSell - yearTaxExpense -
-                                        (yearSalaryCommonAmount + yearMarketsSalaryAmount) - yearAmountBuy -
+                                    <td>{{amountSell.common - yearTaxExpense -
+                                        (yearSalaryCommonAmount + yearMarketsSalaryAmount) - amountBuy.common -
                                         (yearEquipmentServiceExpense + yearCommunalExpense + yearTransportExpense) -
                                         (yearRealizationExpense + yearAdministrationExpense + yearPreOperationExpense) -
                                         (yearPercentExpense + yearOtherCreditExpense) | number : 0}} դր․</td></tr>
