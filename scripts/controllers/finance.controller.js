@@ -21,7 +21,11 @@ RoyalFood.controller('financeController', function ($scope, stConstant,
         $scope.currentMonth = new Date().getMonth();
         $scope.currentYear = new Date().getFullYear();
 
-        $scope.months = [8];
+        var startMonth = ($scope.currentYear == 2015) ? 8 : 0;
+        $scope.months = [];
+        for(var i = startMonth; i <= $scope.currentMonth; i++) {
+            $scope.months.push(i);
+        }
 
         $scope.interval = utilsService.getMonthInterval($scope.currentYear, $scope.currentMonth);
         var start = $scope.interval.start;
