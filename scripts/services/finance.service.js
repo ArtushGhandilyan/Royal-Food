@@ -24,9 +24,11 @@ RoyalFood.factory("financeService", function($q) {
                     }
                 }
 
+                var prevInit = yearInit;
                 var currentYearFinance = commonFinance[year];
                 for(var index = 0; index <= month; index++) {
-                    result[index] = yearInit + (currentYearFinance[index] || 0);
+                    result[index] = prevInit + (currentYearFinance[index] || 0);
+                    prevInit += (currentYearFinance[index] || 0);
                 }
 
                 deferred.resolve(result);
