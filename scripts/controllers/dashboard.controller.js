@@ -7,7 +7,7 @@
  * # dashboardController
  * Controller of the RoyalFood
  */
-RoyalFood.controller('dashboardController',	function ($scope, actions, markets, products, stConstant,
+RoyalFood.controller('dashboardController',	function ($rootScope, $scope, actions, markets, products, stConstant, authService,
                                                          logService, salaryService, financeService, remainService, utilsService) {
         $scope.actions = actions;
         $scope.markets = markets;

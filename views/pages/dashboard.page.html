@@ -220,7 +220,7 @@
                                 <tr ng-repeat="log in salaryLogs">
                                     <td>{{log.date | date : 'dd/MM/yyyy'}}</td>
                                     <td>{{log.worker}}</td>
-                                    <td>{{log.salary}} դր․</td>
+                                    <td>{{log.amount}} դր․</td>
                                     <td>
                                         <md-button class="md-icon-button" aria-label="Delete">
                                             <md-icon md-svg-icon="images/icons/delete.svg" ng-click="removeSalary(log)"></md-icon>
